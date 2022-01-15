@@ -16,7 +16,7 @@ async function searchNews(q) {
 }
 
 function App() {
-  const [query, setQuery] = React.useState("docker");
+  const [query, setQuery] = React.useState("Search Topic");
   const [list, setList] = React.useState(null);
 
   const search = (e) => {
@@ -64,7 +64,7 @@ function Item({ item }) {
       }
 
       <h2 className="title">
-        <a href={item.url}>{item.name}</a>
+        <a className="Link" href={item.url}>{item.name}</a>
       </h2>
 
       <p className="description">
