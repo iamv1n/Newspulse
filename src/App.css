@@ -1,11 +1,11 @@
 body {
-  background: #f7f7f7;
+  background: black;
 }
 
 * {
   margin: 0;
   padding: 0;
-  background-color: lightslategray;
+  background-color: BLACK;
 }
 
 .app {
@@ -23,7 +23,7 @@ form {
 }
 
 button {
-  background: #17f;
+  background: #17F;
   color: #fff;
   font: inherit;
   border: none;

@@ -16,7 +16,7 @@ async function searchNews(q) {
 }
 
 function App() {
-  const [query, setQuery] = React.useState("Search Topic");
+  const [query, setQuery] = React.useState("Search ");
   const [list, setList] = React.useState(null);
 
   const search = (e) => {
