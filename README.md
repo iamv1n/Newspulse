@@ -1,8 +1,11 @@
-# Getting Started with Create React App
+# Query Based News Search App using Bing News API.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Techstack Used
+- ReactJS
+- HTML
+- CSS
 
-## Available Scripts
+## To Start in your Local Machine
 
 In the project directory, you can run:
 
