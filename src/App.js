@@ -1,94 +1,35 @@
-import React from 'react';
-import './App.css';
-
-async function searchNews(q) {
-  q = encodeURIComponent(q);
-  const response = await fetch(`https://bing-news-search1.p.rapidapi.com/news/search?freshness=Day&textFormat=Raw&safeSearch=Strict&q=${q}`, {
-    "method": "GET",
-    "headers": {
-      "x-rapidapi-host": "bing-news-search1.p.rapidapi.com",
-      "x-rapidapi-key": 'b394c65182msh00d36ea0f70ba9dp1af803jsn02d90023fe12',
-      "x-bingapis-sdk": "true"
-    }
-  });
-  const body = await response.json();
-  return body.value;
-}
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+import NavBar from "./components/NavBar/NavBar";
+import News from "./components/News/News";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { router } from "./config/config";
+import Search from "./components/Search/Search";
 
 function App() {
-  const [query, setQuery] = React.useState("Search");
-  const [list, setList] = React.useState(null);
-
-  const search = (e) => {
-    e.preventDefault();
-    searchNews(query).then(setList);
-  };
-
   return (
-    <div className="app">
-
-      <form onSubmit={search}>
-        <input
-          autoFocus
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-        />
-        <button>Search</button>
-      </form>
-
-      {!list
-        ? null
-        : list.length === 0
-          ? <p><i>No results</i></p>
-          : <ul>
-            {list.map((item, i) => (
-              <Item key={i} item={item} />
-            ))}
-          </ul>
-      }
-    </div>
-  );
-}
-
-function Item({ item }) {
-  const separateWords = s => s.replace(/[A-Z][a-z]+/g, '$& ').trim();
-  const formatDate = s => new Date(s).toLocaleDateString(undefined, { dateStyle: 'long' });
-
-  return (
-    <li className="item">
-      {item.image &&
-        <img className="thumbnail"
-          alt=""
-          src={item.image?.thumbnail?.contentUrl}
-        />
-      }
-
-      <h2 className="title">
-        <a className="Link" href={item.url}>{item.name}</a>
-      </h2>
-
-      <p className="description">
-        {item.description}
-      </p>
-
-      <div className="meta">
-        <span>{formatDate(item.datePublished)}</span>
-
-        <span className="provider">
-          {item.provider[0].image?.thumbnail &&
-            <img className="provider-thumbnail"
-              alt=""
-              src={item.provider[0].image.thumbnail.contentUrl + '&w=16&h=16'}
+    <>
+      <Router>
+        <NavBar />
+        <Routes>
+          {router.map((path) => (
+            <Route
+              exact
+              key={uuidv4()}
+              path={path.path}
+              element={
+                <News
+                  key={path.key}
+                  newscategory={path.category}
+                  country={path.country}
+                />
+              }
             />
-          }
-          {item.provider[0].name}
-        </span>
-
-        {item.category &&
-          <span>{separateWords(item.category)}</span>
-        }
-      </div>
-    </li>
+          ))}
+          <Route path="/search/:query" element={<Search />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
